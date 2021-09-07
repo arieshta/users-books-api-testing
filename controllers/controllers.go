@@ -30,7 +30,7 @@ func GetUsersController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, e)
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
+		"message": "success",
 		"users":  users,
 	})
 }
@@ -41,12 +41,12 @@ func GetUserByIdController(c echo.Context) error {
 	user, e := database.GetUserById(id)
 
 	if e != nil {
-		return echo.NewHTTPError(http.StatusNotFound, map[string]interface{}{
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"message": "record not found",
 		})
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
+		"message": "success",
 		"user":   user,
 	})
 }
@@ -63,7 +63,7 @@ func UpdateUserByIdController(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "Success update user",
+		"message": "success update user",
 		"user":   user,
 	})
 }
@@ -77,7 +77,7 @@ func DeleteUserByIdController(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Success delete user",
+		"message": "success delete user",
 	})
 }
 
@@ -90,7 +90,7 @@ func LoginUserController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, e.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success login",
+		"message": "success login",
 		"user": users,
 	})
 }
@@ -117,7 +117,7 @@ func GetBooksController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, e)
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
+		"message": "success",
 		"books":  books,
 	})
 }
@@ -133,7 +133,7 @@ func GetBookByIdController(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
+		"message": "success",
 		"book":   book,
 	})
 }
@@ -150,7 +150,7 @@ func UpdateBookByIdController(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "Success update book",
+		"message": "success update book",
 		"book":   book,
 	})
 }
@@ -164,6 +164,6 @@ func DeleteBookByIdController(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Success delete book",
+		"message": "success delete book",
 	})
 }
