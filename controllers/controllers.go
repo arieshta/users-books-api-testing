@@ -128,7 +128,7 @@ func GetBookByIdController(c echo.Context) error {
 	book, e := database.GetBookById(id)
 
 	if e != nil {
-		return echo.NewHTTPError(http.StatusNotFound, map[string]interface{}{
+		return c.JSON(http.StatusNotFound, map[string]interface{}{
 			"message": "record not found",
 		})
 	}
