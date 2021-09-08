@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	// "fmt"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -39,11 +38,11 @@ func TestGetUsersControllers(t *testing.T) {
 	}
 
 	e := InitEcho()
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-
+	
 	for _, testCase := range testCases {
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
 		c.SetPath(testCase.path)
 
 		// Assertions
@@ -83,17 +82,18 @@ func TestGetUserByIdController(t *testing.T) {
 			testName:             "success",
 			path:                 "/users/",
 			id:                   4,
-			expectStatus:         http.StatusNotFound, // should be StatusOK
+			expectStatus:         http.StatusOK, 
 			expectBodyStartsWith: "{\"message\":\"success\",\"user\":{\"ID\":4",
 		},
 	}
 
 	e := InitEcho()
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-
+	
 	for _, testCase := range testCases {
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+		fmt.Println(testCase.id)
 		c.SetPath(testCase.path)
 		c.SetParamNames("id")
 		c.SetParamValues(strconv.Itoa(testCase.id))
@@ -101,6 +101,7 @@ func TestGetUserByIdController(t *testing.T) {
 		if assert.NoError(t, GetUserByIdController(c)) {
 			assert.Equal(t, testCase.expectStatus, rec.Code)
 			body := rec.Body.String()
+			fmt.Println(body)
 			assert.True(t, strings.Contains(body, testCase.expectBodyStartsWith))
 		}
 	}
@@ -217,17 +218,17 @@ func TestDeleteUserByIdController(t *testing.T) {
 		{
 			testName:             "success",
 			path:                 "/users",
-			id:                   34,
+			id:                   35,
 			expectStatus:         http.StatusOK,
 			expectBodyStartsWith: "{\"message\":\"success delete",
 		},
 	}
 	e := InitEcho()
-	req := httptest.NewRequest(http.MethodDelete, "/", nil)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-
+	
 	for _, testCase := range testCases {
+		req := httptest.NewRequest(http.MethodDelete, "/", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
 		c.SetPath(testCase.path)
 		c.SetParamNames("id")
 		c.SetParamValues(strconv.Itoa(testCase.id))
